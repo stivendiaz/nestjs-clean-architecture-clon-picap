@@ -14,6 +14,7 @@ export function calculateDistance(ride: RideModel): number {
 }
 
 export function calculateAmount({ distance, minutes }): number {
+  // TODO: get prices from config service
   const amount = distance * 1000 + minutes * 200;
   return amount;
 }

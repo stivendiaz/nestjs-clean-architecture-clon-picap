@@ -17,7 +17,7 @@ export class PaymentService {
   ): Promise<AxiosResponse<PaymentCreatedDto>> {
     const config = {
       headers: {
-        Authorization: 'Bearer ' + 'WOMPI_SECRET_KEY',
+        Authorization: 'Bearer ' + this.config.get('WOMPI_SECRET_KEY'),
       },
     };
 
