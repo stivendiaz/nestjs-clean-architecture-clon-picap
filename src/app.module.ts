@@ -10,9 +10,14 @@ import { RiderUseCasesModule } from './rider/infrastructure/module/rider.usecase
 import { RiderController } from './rider/infrastructure/controller/rider.controller';
 import { RideUseCasesModule } from './ride/infrastructure/module/ride.usecases.module';
 import { RideController } from './ride/infrastructure/controller/ride.controller';
+import { ConfigModule } from '@nestjs/config';
+import { getEnvPath } from './shared/config/helper/';
+
+const envFilePath: string = getEnvPath(`${__dirname}/src/shared/config/.env`);
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
