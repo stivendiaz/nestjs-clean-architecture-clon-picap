@@ -16,8 +16,10 @@ import {
   FindOneDriverUseCase,
 } from 'src/driver/application';
 import { DriverModel } from 'src/driver/domain/model/driver.model';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('driver')
+@ApiTags('driver')
 export class DriverController {
   constructor(
     private readonly createDriverUseCase: CreateDriverUseCase,
