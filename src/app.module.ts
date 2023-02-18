@@ -10,6 +10,7 @@ import { RiderUseCasesModule } from './rider/infrastructure/module/rider.usecase
 import { RiderController } from './rider/infrastructure/controller/rider.controller';
 import { RideUseCasesModule } from './ride/infrastructure/module/ride.usecases.module';
 import { RideController } from './ride/infrastructure/controller/ride.controller';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
