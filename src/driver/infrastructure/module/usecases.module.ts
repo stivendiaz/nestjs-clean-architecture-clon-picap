@@ -23,4 +23,4 @@ import { DriverRepositoryModule } from './driver.repository.module';
     UpdateDriverUseCase,
   ],
 })
-export class UseCasesModule {}
+export class DriverUseCasesModule {}
