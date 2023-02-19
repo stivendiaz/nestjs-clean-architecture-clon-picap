@@ -5,20 +5,43 @@
 #TODO: finish nestjs configuration
 
 FROM node:18-alpine As development
+WORKDIR /app
 
-# Create app directory
-WORKDIR /usr/src/app
+# Copy configuration files
+COPY tsconfig*.json ./
+COPY package*.json ./
 
-# Copy application dependency manifests to the container image.
-# A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
-# Copying this first prevents re-running npm install on every code change.
-COPY --chown=node:node package*.json ./
-
-# Install app dependencies using the `npm ci` command instead of `npm install`
+# Install dependencies from package-lock.json, see https://docs.npmjs.com/cli/v7/commands/npm-ci
 RUN npm ci
 
-# Bundle app source
-COPY --chown=node:node . .
+# Copy application sources (.ts, .tsx, js)
+COPY src/ src/
 
-# Use the node user from the image (instead of the root user)
-USER node
+# Build application (produces dist/ folder)
+RUN npm run build
+
+# Runtime (production) layer
+FROM node:16-alpine as production
+
+# Optional NPM automation (auth) token build argument
+# ARG NPM_TOKEN
+
+# Optionally authenticate NPM registry
+# RUN npm set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+
+WORKDIR /app
+
+# Copy dependencies files
+COPY package*.json ./
+
+# Install runtime dependecies (without dev/test dependecies)
+RUN npm ci --omit=dev
+
+# Copy production build
+COPY --from=development /app/dist/ ./dist/
+
+# Expose application port
+EXPOSE 3000
+
+# Start application
+CMD [ "node", "dist/main.js" ]

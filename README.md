@@ -45,17 +45,11 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Running Docker: Node/Redis Cache/PostgreSQL
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# docker-compose
+$ docker compose --env-file ./src/shared/config/envs/development.env up -V --build
 ```
 
 ## Support
